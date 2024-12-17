@@ -3,20 +3,35 @@ o_win = False
 tie = False
 x = {"a1":'-', "a2":'-', "a3":'-',"b1":'-', "b2":'-', "b3":'-', "c1":'-', "c2":'-', "c3":'-'}
 o = {"a1":'-', "a2":'-', "a3":'-',"b1":'-', "b2":'-', "b3":'-', "c1":'-', "c2":'-', "c3":'-'}
-board = {"a1":0, "a2":0, "a3":0,"b1":0, "b2":0, "b3":0, "c1":0, "c2":0, "c3":0}
+board = {
+    "a1": '-', "a2": '-', "a3": '-',
+    "b1": '-', "b2": '-', "b3": '-',
+    "c1": '-', "c2": '-', "c3": '-'
+}
 
 #8 ways to win tic tac toe
 #3 vertical: x["a1"] == 1 and x["a2"] == 1 and x["a3"] == 1 or x["b1"] == 1 and x["b2"] == 1 and x["b3"] == 1 or x["c1"] == 1 and x["c2"] == 1 and x["c3"] == 1
 #3 horizontal: x["a1"] == 1 and x["b1"] == 1 and x["c1"] == 1 or x["a2"] == 1 and x["b2"] == 1 and x["c2"] == 1 or x["a3"] == 1 and x["b3"] == 1 and x["c3"] == 1
 #2 diagonal: x["a1"] == 1 and x["b2"] == 1 and x["c3"] == 1 or x["a3"] == 1 and x["b2"] == 1 and x["c1"] == 1
+winning_combinations = [
+    ["a1", "a2", "a3"],  # Row 1
+    ["b1", "b2", "b3"],  # Row 2
+    ["c1", "c2", "c3"],  # Row 3
+    ["a1", "b1", "c1"],  # Column 1
+    ["a2", "b2", "c2"],  # Column 2
+    ["a3", "b3", "c3"],  # Column 3
+    ["a1", "b2", "c3"],  # Diagonal 1
+    ["a3", "b2", "c1"]   # Diagonal 2
+]
 
 def check_win():
-    if x["a1"] == 'O' and x["a2"] == 'O' and x["a3"] == 'O' or x["b1"] == 'O' and x["b2"] == 'O' and x["b3"] == 'O' or x["c1"] == 'O' and x["c2"] == 'O' and x["c3"] == 'O' or x["a1"] == 'O' and x["b1"] == 'O' and x["c1"] == 'O' or x["a2"] == 'O' and x["b2"] == 'O' and x["c2"] == 'O' or x["a3"] == 'O' and x["b3"] == 'O' and x["c3"] == 'O' or x["a1"] == 'O' and x["b2"] == 'O' and x["c3"] == 'O' or x["a3"] == 'O' and x["b2"] == 'O' and x["c1"] == 'O':
-        x_win == True
-    if o["a1"] == 'O' and o["a2"] == 'O' and o["a3"] == 'O' or o["b1"] == 'O' and o["b2"] == 'O' and o["b3"] == 'O' or o["c1"] == 'O' and o["c2"] == 'O' and o["c3"] == 'O' or o["a1"] == 'O' and o["b1"] == 'O' and o["c1"] == 'O' or o["a2"] == 'O' and o["b2"] == 'O' and o["c2"] == 'O' or o["a3"] == 'O' and o["b3"] == 'O' and o["c3"] == 'O' or o["a1"] == 'O' and o["b2"] == 'O' and o["c3"] == 'O' or o["a3"] == 'O' and o["b2"] == 'O' and o["c1"] == 'O':
-        o_win == True
-    if board == list(board.values()) and x_win == False and o_win == False:
-        tie == True
+    for combination in winning_combinations:
+        if all(board[cell] == 'O' for cell in combination):
+            print("O wins!")
+            break
+        if all(board[cell] == 'X' for cell in combination):
+            print("X wins!")
+
 def print_board(a1 = '-', a2 = '-', a3= '-', b1= '-', b2= '-', b3= '-', c1= '-', c2= '-', c3= '-'):
     print("""   a     b     c
       |     |     
