@@ -1,8 +1,7 @@
 x_win = False
 o_win = False
 tie = False
-x = {"a1":'-', "a2":'-', "a3":'-',"b1":'-', "b2":'-', "b3":'-', "c1":'-', "c2":'-', "c3":'-'}
-o = {"a1":'-', "a2":'-', "a3":'-',"b1":'-', "b2":'-', "b3":'-', "c1":'-', "c2":'-', "c3":'-'}
+
 board = {
     "a1": '-', "a2": '-', "a3": '-',
     "b1": '-', "b2": '-', "b3": '-',
@@ -27,10 +26,11 @@ winning_combinations = [
 def check_win():
     for combination in winning_combinations:
         if all(board[cell] == 'O' for cell in combination):
-            print("O wins!")
-            break
+            return 'O'
         if all(board[cell] == 'X' for cell in combination):
-            print("X wins!")
+            return 'X'
+    if all(board[cell] != '-' for cell in list(board.keys())):
+        return 'No one'
 
 def print_board(a1 = '-', a2 = '-', a3= '-', b1= '-', b2= '-', b3= '-', c1= '-', c2= '-', c3= '-'):
     print("""   a     b     c
@@ -44,25 +44,29 @@ def print_board(a1 = '-', a2 = '-', a3= '-', b1= '-', b2= '-', b3= '-', c1= '-',
 3  {2}  |  {5}  |  {8}  
       |     |     """.format(a1, a2, a3, b1, b2, b3, c1, c2, c3))
 
-
-
-l = [1,1,1,1,1,1,1,1,1]
-print(list(board.values()))
-print(l == list(board.values()))
-
-while x_win == False and o_win == False and tie == False:
-    print("O it\'s your turn!")
-    o_spot = input("Enter a space in grid (ex: a1)")
-    if o_spot not in list(o.keys()):
-        while o_spot not in list(o.keys()):
-            print("Invalid input, try again.")
-            o_spot = input("Enter a space in grid (ex: a1)")
-    elif board[o_spot] == 1:
-        print("Space already taken, try again.")
-        while board[o_spot] == 1:
-            print("Space already taken, try again.")
-            o_spot = input("Enter a space in grid (ex: a1)")
+def play(p):
+    print("{0} its you\'re turn!".format(p))
+    space = input("Enter the space you want to play: ")
+    if board[space] == '-':
+        board[space] = p
     else:
-        board[o_spot] == 1
-        o[o_spot] == 1
+        print("Space already taken!")
+        play(p)
 
+print_board(*list(board.values()))
+
+while True:
+    #O plays
+    play('O')
+    print_board(*list(board.values()))
+    if check_win() == 'O':
+        break
+    #X plays
+    play('X')
+    print_board(*list(board.values()))
+    if check_win() == 'X':
+        break
+    if check_win() == 'No one':
+        break
+
+print("{0} wins!".format(check_win()))
