@@ -47,10 +47,14 @@ def print_board(a1 = '-', a2 = '-', a3= '-', b1= '-', b2= '-', b3= '-', c1= '-',
 def play(p):
     print("{0} its you\'re turn!".format(p))
     space = input("Enter the space you want to play: ")
-    if board[space] == '-':
-        board[space] = p
-    else:
-        print("Space already taken!")
+    try:
+        if board[space] == '-':
+            board[space] = p
+        else:
+            print("Space already taken!")
+            play(p)
+    except:
+        print("Invalid input. Try again!")
         play(p)
 
 print_board(*list(board.values()))
