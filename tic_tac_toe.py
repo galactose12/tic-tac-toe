@@ -1,11 +1,11 @@
 x_win = False
 o_win = False
 tie = False
-
+nums = [1,2,3,4,5,6,7,8,9]
 board = {
-    "a1": '-', "a2": '-', "a3": '-',
-    "b1": '-', "b2": '-', "b3": '-',
-    "c1": '-', "c2": '-', "c3": '-'
+    1:1, 2:2, 3:3,
+    4:4, 5:5, 6:6,
+    7:7, 8:8, 9:9
 }
 
 #8 ways to win tic tac toe
@@ -13,14 +13,14 @@ board = {
 #3 horizontal: x["a1"] == 1 and x["b1"] == 1 and x["c1"] == 1 or x["a2"] == 1 and x["b2"] == 1 and x["c2"] == 1 or x["a3"] == 1 and x["b3"] == 1 and x["c3"] == 1
 #2 diagonal: x["a1"] == 1 and x["b2"] == 1 and x["c3"] == 1 or x["a3"] == 1 and x["b2"] == 1 and x["c1"] == 1
 winning_combinations = [
-    ["a1", "a2", "a3"],  # Row 1
-    ["b1", "b2", "b3"],  # Row 2
-    ["c1", "c2", "c3"],  # Row 3
-    ["a1", "b1", "c1"],  # Column 1
-    ["a2", "b2", "c2"],  # Column 2
-    ["a3", "b3", "c3"],  # Column 3
-    ["a1", "b2", "c3"],  # Diagonal 1
-    ["a3", "b2", "c1"]   # Diagonal 2
+    [1,2,3],  # Row 1
+    [4,5,6],  # Row 2
+    [7,8,9],  # Row 3
+    [1,4,7],  # Column 1
+    [2,5,8],  # Column 2
+    [3,6,9],  # Column 3
+    [1,5,9],  # Diagonal 1
+    [7,5,3]   # Diagonal 2
 ]
 
 def check_win():
@@ -29,7 +29,7 @@ def check_win():
             return 'O'
         if all(board[cell] == 'X' for cell in combination):
             return 'X'
-    if all(board[cell] != '-' for cell in list(board.keys())):
+    if all(board[cell] not in nums for cell in list(board.keys())):
         return 'No one'
 
 def print_board(a1 = '-', a2 = '-', a3= '-', b1= '-', b2= '-', b3= '-', c1= '-', c2= '-', c3= '-'):
@@ -47,8 +47,9 @@ def print_board(a1 = '-', a2 = '-', a3= '-', b1= '-', b2= '-', b3= '-', c1= '-',
 def play(p):
     print("{0} its you\'re turn!".format(p))
     space = input("Enter the space you want to play: ")
+    space = int(space)
     try:
-        if board[space] == '-':
+        if board[space] in nums:
             board[space] = p
         else:
             print("Space already taken!")
