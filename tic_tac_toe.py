@@ -58,21 +58,13 @@ def play(p):
         print("Invalid input. Try again!")
         play(p)
 
-print_board(*list(board.values()))
 xo = ('O', 'X')
 turn = 0
 while True:
-    #O plays
-    play('O')
     print_board(*list(board.values()))
+    play(xo[turn % 2])
     if check_win():
         break
-    #X plays
-    play('X')
-    print_board(*list(board.values()))
-    if check_win() == 'X':
-        break
-    if check_win() == 'No one':
-        break
+    turn += 1
 
 print("{0} wins!".format(check_win()))
