@@ -29,9 +29,9 @@ def check_win():
             return 'O'
         if all(board[cell] == 'X' for cell in combination):
             return 'X'
-    if all(board[cell] not in nums for cell in list(board.keys())):
+    if all(board[cell] in xo for cell in list(board.keys())):
         return 'No one'
-
+    return None
 def print_board(a1 = '-', a2 = '-', a3= '-', b1= '-', b2= '-', b3= '-', c1= '-', c2= '-', c3= '-'):
     print("""             
      |     |     
@@ -47,8 +47,8 @@ _____|_____|_____
 def play(p):
     print("{0} its you\'re turn!".format(p))
     space = input("Enter the space you want to play: ")
-    space = int(space)
     try:
+        space = int(space)
         if board[space] in nums:
             board[space] = p
         else:
@@ -59,12 +59,13 @@ def play(p):
         play(p)
 
 print_board(*list(board.values()))
-
+xo = ('O', 'X')
+turn = 0
 while True:
     #O plays
     play('O')
     print_board(*list(board.values()))
-    if check_win() == 'O':
+    if check_win():
         break
     #X plays
     play('X')
